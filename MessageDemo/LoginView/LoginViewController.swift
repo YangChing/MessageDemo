@@ -44,7 +44,7 @@ class LoginViewController: UIViewController {
       return
     }
 
-
+    SVProgressHUD.show(withStatus: "登入中")
     if nickname.text == nil, nickname.text == "" {
       nickname.text = email.components(separatedBy: "@").first
     }
@@ -57,6 +57,7 @@ class LoginViewController: UIViewController {
       } else {
         self.showAlert(title: "登入失敗")
       }
+      SVProgressHUD.dismiss()
     }
   }
 
@@ -71,7 +72,8 @@ class LoginViewController: UIViewController {
       showAlert(title: "請輸入password")
       return
     }
-    SVProgressHUD.show()
+
+    SVProgressHUD.show(withStatus: "註冊中")
     if nickname.text == nil, nickname.text == "" {
       nickname.text = email.components(separatedBy: "@").first
     }

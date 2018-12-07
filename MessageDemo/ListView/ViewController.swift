@@ -50,9 +50,7 @@ class ViewController: UIViewController {
         } else {
           self.viewModel.createChatRoom(roomName: name, completion: {
             isCreated in
-            if isCreated {
-//              self.viewModel.updateChatRooms()
-            } else {
+            if !isCreated {
               self.showAlert(title: "建立失敗")
             }
           })

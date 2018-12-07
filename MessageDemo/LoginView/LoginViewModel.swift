@@ -14,10 +14,7 @@ class LoginViewModel {
   func signup(email: String, password: String, nickName: String?, completion: @escaping (Bool) -> ()) {
     Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
       if let user = result?.user {
-        let member = Member.init(email: user.email ?? "", nickname: nickName ?? user.displayName ?? "")
-        myUserDefaults.setValue(member.email, forKey: "email")
-        myUserDefaults.setValue(member.nickname, forKey: "nickname")
-        myUserDefaults.synchronize()
+        self.saveToUserDefault(user: user, nickName: nickName)
         completion(true)
       } else {
         completion(false)
@@ -28,15 +25,19 @@ class LoginViewModel {
   func logIn(email: String, password: String, nickName: String? ,completion: @escaping (Bool) -> ()) {
     Auth.auth().signIn(withEmail: email, password: password) { (result, err) in
       if let user = result?.user {
-        let member = Member.init(email: user.email ?? "", nickname: nickName ?? user.displayName ?? "")
-        myUserDefaults.setValue(member.email, forKey: "email")
-        myUserDefaults.setValue(member.nickname, forKey: "nickname")
-        myUserDefaults.synchronize()
+        self.saveToUserDefault(user: user, nickName: nickName)
         completion(true)
       } else {
         completion(false)
       }
     }
+  }
+
+  func saveToUserDefault(user: User, nickName: String?) {
+    let member = Member.init(email: user.email ?? "", nickname: nickName ?? user.displayName ?? "")
+    myUserDefaults.setValue(member.email, forKey: "email")
+    myUserDefaults.setValue(member.nickname, forKey: "nickname")
+    myUserDefaults.synchronize()
   }
 
 
