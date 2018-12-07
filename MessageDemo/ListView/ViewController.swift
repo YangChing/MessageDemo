@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ViewController: UIViewController {
 
@@ -33,6 +34,8 @@ class ViewController: UIViewController {
 
   @IBAction func addChatRoom(_ sender: UIBarButtonItem) {
 
+    Analytics.logEvent("tapped_add_button", parameters: nil)
+    
     let alert = UIAlertController(title: "請輸入聊天室名稱", message: "", preferredStyle: .alert)
     alert.addTextField(configurationHandler: nil)
     alert.addAction(UIAlertAction(title: "確認", style: .default, handler: { (action: UIAlertAction!) in
@@ -114,6 +117,8 @@ extension ViewController: UITableViewDataSource {
 
 extension ViewController: ViewModelDelegate {
   func updateChatRoomList() {
+    guard isViewLoaded else { return }
+    
     self.tableView.reloadData()
   }
 }
